@@ -1,0 +1,9 @@
+# Runtime dependencies.
+#
+# `pip install -e .` reads pyproject.toml and is the preferred path; this file
+# exists for tooling and habits that expect it. Keep the two in sync.
+
+# mcp 2.x only: the server is built on MCPServer and the subscriptions/listen
+# machinery (SEP-2575), neither of which exists in the 1.x SDK.
+mcp>=2.1,<3
+anyio>=4.0

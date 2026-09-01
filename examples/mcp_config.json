@@ -1,0 +1,23 @@
+{
+  "_comment": [
+    "Replace /ABSOLUTE/PATH/TO/warnsync-mcp with this repository's path.",
+    "This 'mcpServers' object is the configuration shape most MCP clients read;",
+    "consult your client's documentation for which file it expects it in."
+  ],
+  "mcpServers": {
+    "warnsync": {
+      "command": "python",
+      "args": [
+        "-m",
+        "warnsync_mcp",
+        "--corpus",
+        "/ABSOLUTE/PATH/TO/warnsync-mcp/data/sample_corpus",
+        "--poll-interval",
+        "30"
+      ],
+      "env": {
+        "PYTHONPATH": "/ABSOLUTE/PATH/TO/warnsync-mcp/src"
+      }
+    }
+  }
+}
