@@ -91,6 +91,70 @@ addition — it is what makes freshness observable in a demo.
 Resources: `warnsync://manifest` (one row per letter — subscribe here) and
 `warnsync://letter/{letter_id}`.
 
+## Results
+
+Four conditions, one corpus, one store, one embedder — differing only in *when
+ingestion happens relative to the query*. Corpus of 500 generated letters, 10 update cycles,
+run on Python 3.13.7 / macOS arm64.
+Reproduce with `python experiments/run.py`; raw output is in
+[experiments/results.json](experiments/results.json).
+
+| | B1 static | B2 full re-index | B3 synchronous | **WS (WarnSync)** |
+|---|---|---|---|---|
+| Corpus reprocessed per update | 0.0% | 99.1% | 0.4% | **0.4%** |
+| Chunks embedded per update | 0.0 | 728.4 | 2.7 | **2.7** |
+| Time to queryable (median) | never | 389.8 ms | 185.1 ms | **113.3 ms** |
+| Sustained throughput (8 qps offered) | 8.05 | 2.90 | 5.40 | **8.05** |
+| Query latency p50 | 72.2 ms | 459.7 ms | 187.2 ms | **76.3 ms** |
+| Query latency p95 | 75.4 ms | 488.3 ms | 195.2 ms | **132.4 ms** |
+| Background update deadlines missed | n/a — never updates | 20 / 41 | n/a — updates on query path | **1 / 41** |
+| Serves fresh content | no | yes | yes | **yes** |
+
+**B1 is the ceiling, not a competitor.** It does no work and answers from a
+frozen index, so its latency is the best any condition could achieve. The
+result that matters is that **WarnSync matches it** — 8.05 qps against
+B1's 8.05, p50 76.3 ms against 72.2 ms — while applying every
+update B1 ignores, missing 1 of 41 deadlines.
+
+**The two alternatives to asynchrony both cost the query path.** Rebuilding in
+place (B2) drops sustained throughput to 2.90 qps — 2.8x fewer queries served —
+and raises p50 latency 6.4x, while still missing 20 of 41 update deadlines.
+Putting ingestion on the query path (B3) makes every query pay for it:
+p50 rises 2.6x.
+
+**Incremental updating is sound, not just fast.** After
+10 update cycles, the incrementally-maintained index returns
+**identical** top-10 results to a clean rebuild from the same corpus state
+for all 12 of 12 evaluation queries (Jaccard
+1.00, Kendall τ 1.00). It does not drift.
+Answers to unchanged questions stay stable as the corpus grows
+(mean Jaccard@10 0.994 between consecutive index states).
+
+### What these numbers do not show
+
+Stated plainly, because the gap between them and a retrieval-quality claim is
+where this kind of result usually gets oversold:
+
+- **No retrieval quality.** The embedder is a hashed bag-of-words placeholder.
+  Recall@k and nDCG@k are not reported because they would be meaningless.
+- **No real corpus.** The letters are generated and uniform in ways real
+  enforcement letters are not.
+- **No live freshness lag.** Nothing polls a real listing. Detection delay is
+  excluded from "time to queryable" precisely because it is bounded by the poll
+  interval — a configuration constant, not a property of the system.
+- **Ratios, not milliseconds.** The store is in-memory with a brute-force
+  scan. Absolute latencies reflect that; only the comparisons are the result.
+
+One caveat cuts *against* WarnSync's numbers and is worth stating: with a
+placeholder embedder, embedding is so cheap that WarnSync's per-cycle cost is
+dominated by the O(N) fingerprint scan rather than by embedding. The wall-clock
+gap therefore **understates** what a real embedding model would show — compare
+chunks embedded (728.4 vs 2.7, a
+270x difference) for the ratio a real deployment would expose.
+
+Methodology, including why load is offered open-loop and why the update cadence
+is pinned, is documented in [experiments/README.md](experiments/README.md).
+
 ## How it works
 
 ```

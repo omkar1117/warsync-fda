@@ -1,0 +1,170 @@
+{
+  "environment": {
+    "python": "3.13.7",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "processor": "arm",
+    "embedder": "HashingEmbedder(dim=256) \u2014 placeholder, not a neural model",
+    "corpus": "generated synthetic, deterministic (seed 20260831)",
+    "run_seconds": 115.2
+  },
+  "ingestion_efficiency": {
+    "corpus_size": 500,
+    "cycles": 10,
+    "rows": [
+      {
+        "condition": "B1",
+        "label": "B1 static",
+        "letters_reprocessed_per_cycle": 0,
+        "chunks_embedded_per_cycle": 0,
+        "corpus_reprocessed_pct": 0.0,
+        "seconds_per_cycle": 0.0,
+        "work_on_query_path": false
+      },
+      {
+        "condition": "B2",
+        "label": "B2 full re-index",
+        "letters_reprocessed_per_cycle": 505.5,
+        "chunks_embedded_per_cycle": 728.4,
+        "corpus_reprocessed_pct": 99.11764705882354,
+        "seconds_per_cycle": 0.4144864959962433,
+        "work_on_query_path": false
+      },
+      {
+        "condition": "B3",
+        "label": "B3 synchronous",
+        "letters_reprocessed_per_cycle": 2,
+        "chunks_embedded_per_cycle": 2.7,
+        "corpus_reprocessed_pct": 0.39215686274509803,
+        "seconds_per_cycle": 0.18706194600090384,
+        "work_on_query_path": true
+      },
+      {
+        "condition": "WS",
+        "label": "WS (WarnSync)",
+        "letters_reprocessed_per_cycle": 2,
+        "chunks_embedded_per_cycle": 2.7,
+        "corpus_reprocessed_pct": 0.39215686274509803,
+        "seconds_per_cycle": 0.10793962909665425,
+        "work_on_query_path": false
+      }
+    ]
+  },
+  "availability": {
+    "corpus_size": 500,
+    "duration_s": 20.0,
+    "offered_qps": 8.0,
+    "update_period_s": 0.5,
+    "rows": [
+      {
+        "condition": "B1",
+        "label": "B1 static",
+        "duration_s": 20.0,
+        "offered_qps": 8.0,
+        "queries_completed": 161,
+        "achieved_qps": 8.05,
+        "queries_late": 1,
+        "success_rate_pct": 100.0,
+        "p50_ms": 72.18658400233835,
+        "p95_ms": 75.35783399362117,
+        "max_ms": 139.23262499156408,
+        "updates_applied": 41,
+        "update_deadlines_missed": 0,
+        "update_period_s": 0.5
+      },
+      {
+        "condition": "B2",
+        "label": "B2 full re-index",
+        "duration_s": 20.0,
+        "offered_qps": 8.0,
+        "queries_completed": 58,
+        "achieved_qps": 2.9,
+        "queries_late": 57,
+        "success_rate_pct": 100.0,
+        "p50_ms": 459.740749996854,
+        "p95_ms": 488.3184999926016,
+        "max_ms": 499.695917009376,
+        "updates_applied": 41,
+        "update_deadlines_missed": 20,
+        "update_period_s": 0.5
+      },
+      {
+        "condition": "B3",
+        "label": "B3 synchronous",
+        "duration_s": 20.0,
+        "offered_qps": 8.0,
+        "queries_completed": 108,
+        "achieved_qps": 5.4,
+        "queries_late": 108,
+        "success_rate_pct": 100.0,
+        "p50_ms": 187.2197919874452,
+        "p95_ms": 195.18675000290386,
+        "max_ms": 207.61470799334347,
+        "updates_applied": 40,
+        "update_deadlines_missed": 0,
+        "update_period_s": 0.5
+      },
+      {
+        "condition": "WS",
+        "label": "WS (WarnSync)",
+        "duration_s": 20.0,
+        "offered_qps": 8.0,
+        "queries_completed": 161,
+        "achieved_qps": 8.05,
+        "queries_late": 46,
+        "success_rate_pct": 100.0,
+        "p50_ms": 76.32704099523835,
+        "p95_ms": 132.42949999403208,
+        "max_ms": 179.65945901232772,
+        "updates_applied": 41,
+        "update_deadlines_missed": 1,
+        "update_period_s": 0.5
+      }
+    ]
+  },
+  "freshness": {
+    "corpus_size": 500,
+    "repeats": 10,
+    "rows": [
+      {
+        "condition": "B1",
+        "label": "B1 static",
+        "becomes_queryable": false,
+        "median_ms": 0.003749999450519681,
+        "p95_ms": 0.010249990737065673
+      },
+      {
+        "condition": "B2",
+        "label": "B2 full re-index",
+        "becomes_queryable": true,
+        "median_ms": 389.80166701367125,
+        "p95_ms": 393.1360419956036
+      },
+      {
+        "condition": "B3",
+        "label": "B3 synchronous",
+        "becomes_queryable": true,
+        "median_ms": 185.1119170023594,
+        "p95_ms": 188.08875000104308
+      },
+      {
+        "condition": "WS",
+        "label": "WS (WarnSync)",
+        "becomes_queryable": true,
+        "median_ms": 113.31116600194946,
+        "p95_ms": 133.38775001466274
+      }
+    ]
+  },
+  "equivalence": {
+    "corpus_size": 500,
+    "cycles": 10,
+    "k": 10,
+    "queries": 12,
+    "identical_result_lists": 12,
+    "mean_jaccard_vs_rebuild": 1.0,
+    "mean_kendall_tau_vs_rebuild": 1.0,
+    "mean_jaccard_between_states": 0.9939393939393939,
+    "min_jaccard_between_states": 0.8181818181818182,
+    "mean_jaccard_first_to_last": 0.9393939393939394
+  }
+}
