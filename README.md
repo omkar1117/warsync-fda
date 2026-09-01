@@ -67,7 +67,9 @@ python -m warnsync_mcp --corpus data/sample_corpus --poll-interval 30
 ```
 
 To connect a client, see [examples/](examples/). Captured output from both
-demos is in [docs/sample-output.md](docs/sample-output.md).
+demos is in [docs/sample-output.md](docs/sample-output.md), and
+[docs/roadmap.md](docs/roadmap.md) covers what the missing pieces would need to
+look like to compose with what is here.
 
 ## Tool surface
 

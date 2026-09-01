@@ -7,3 +7,6 @@ dist/
 build/
 *.egg-info/
 .DS_Store
+
+# Local working notes (manuscript strategy, not for publication)
+NOTES-paper.md
