@@ -195,19 +195,6 @@ tests/           unit tests + stdio integration tests
 data/            synthetic corpus
 ```
 
-## Citation
-
-If you use this code, please cite the paper:
-
-```bibtex
-@misc{pakki2026warnsync,
-  author = {Pakki, Omkar},
-  title  = {WarnSync: An Asynchronously Synchronized Model Context Protocol
-            Server for FDA Warning-Letter Intelligence},
-  year   = {2026}
-}
-```
-
 ## License
 
 MIT — see [LICENSE](LICENSE).
